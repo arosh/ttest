@@ -1,0 +1,14 @@
+{
+    "name": "ttest",
+    "description": "",
+    "version": "0.0.0",
+    "author": "arosh",
+    "license": "MIT",
+    "dependencies": {
+        "distributions": "^0.2.1",
+        "summary": "^0.3.2"
+    },
+    "devDependencies": {
+        "webpack": "^1.12.14"
+    }
+}
