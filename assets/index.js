@@ -15,13 +15,22 @@ $(function () {
         return { t: t, nu: nu, pvalue: pvalue };
     };
 
+    var effectsizeUnpaired = function (xs, ys) {
+        var summary = require("summary");
+        var x = summary(xs);
+        var y = summary(ys);
+        var numer = x.mean() - y.mean();
+        var denom = Math.sqrt(((x.size() - 1) * x.variance() + (y.size() - 1) * y.variance()) / (x.size() + y.size() - 2));
+        return numer / denom;
+    };
+
     Number.isFinite = Number.isFinite || function (any) {
         return typeof any === 'number' && isFinite(any);
     };
 
     var parseTextArea = function (elem) {
-        var items = $(elem).val().split(/\s+/);
-        console.log(items);
+        var summary = require("summary");
+        var items = $(elem).val().split(/[,\s]+/);
         var numbers = [];
         $.each(items, function (index, item) {
             var num = parseFloat($.trim(item));
@@ -29,14 +38,25 @@ $(function () {
                 numbers.push(num);
             }
         });
-        return numbers;
+        return summary(numbers);
     };
 
-    var xs = [1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 4, 1, 1];
-    var ys = [3, 3, 4, 3, 1, 2, 3, 1, 1, 5, 4];
-    console.log(welchttest(xs, ys));
+    $("#group-x").val([1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 4, 1, 1].join("\n"));
+    $("#group-y").val([3, 3, 4, 3, 1, 2, 3, 1, 1, 5, 4].join("\n"));
 
     $('#run-test').on('click', function () {
-        console.log(parseTextArea('#group-x'));
+        var xs = parseTextArea("#group-x");
+        var ys = parseTextArea("#group-y");
+        $("#mean-x").text(xs.mean().toPrecision(5));
+        $("#mean-y").text(ys.mean().toPrecision(5));
+        $("#variance-x").text(xs.variance().toPrecision(5));
+        $("#variance-y").text(ys.variance().toPrecision(5));
+        var welch = welchttest(xs._data, ys._data);
+        $("#welch-ttest-t").text("t = " + welch.t.toPrecision(5));
+        $("#welch-ttest-nu").text("nu = " + welch.nu.toPrecision(5));
+        $("#welch-ttest-p").text("p = " + welch.pvalue.toPrecision(5));
+        $("#effect-size-cohen").text("d = " + effectsizeUnpaired(xs._data, ys._data).toPrecision(5));
     });
+
+    $("#run-test").click();
 });
