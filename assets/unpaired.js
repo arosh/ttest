@@ -11,7 +11,7 @@ $(function () {
         var denom = Math.pow(sxm, 2) / (x.size() - 1) + Math.pow(syn, 2) / (y.size() - 1);
         var nu = numer / denom;
         var studentt = new distributions.Studentt(nu);
-        var pvalue = 2 * Math.min(studentt.cdf(t), 1 - studentt.cdf(t));
+        var pvalue = 2 * (1 - studentt.cdf(Math.abs(t)));
         return { t: t, nu: nu, pvalue: pvalue };
     };
 

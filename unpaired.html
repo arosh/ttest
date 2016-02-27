@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Unpaired t-test</title>
+<title>Unpaired two-tailed t-test</title>
 <link rel="stylesheet" href="assets/bootstrap-umi.min.css">
 
 <style>
@@ -13,14 +13,14 @@
 <div class="container">
     <nav class="navbar navbar-default">
         <ul class="nav navbar-nav">
-            <li><a href="#">Unpaired t-test</a></li>
-            <li><a href="#">Paired t-test</a></li>
+            <li><a href="#">Unpaired two-tailed t-test</a></li>
+            <li><a href="#">Paired two-tailed t-test</a></li>
         </ul>
     </nav>
 
-    <h1>Unpaired t-test</h1>
+    <h1>Unpaired two-tailed t-test</h1>
 
-    <div class="row" style="margin-bottom: 1em;">
+    <div class="row">
         <div class="col-xs-6">
             <h3>Sample 1</h3>
             <textarea rows="10" class="form-control" id="group-x"></textarea>
@@ -31,7 +31,7 @@
         </div>
     </div>
 
-    <button class="btn btn-primary pull-right" type="button" id="run-test">Test</button>
+    <button class="btn btn-primary pull-right" type="button" id="run-test" style="margin-top: 1em; margin-bottom: 1em;">Test</button>
 
     <table class="table">
         <thead>
@@ -65,7 +65,7 @@
                 <td id="welch-ttest-nu" colspan="2"></td>
             </tr>
             <tr>
-                <td>\[p=2\min(\mathrm{Student}_\nu(t), 1 - \mathrm{Student}_\nu(t))\]</td>
+                <td>\[p=2(1-\mathrm{cdf}(\nu,|t|))\]</td>
                 <td id="welch-ttest-p" colspan="2"></td>
             </tr>
             <tr>
@@ -88,10 +88,7 @@
 <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
 <script src="assets/unpaired.min.js"></script>
 <script type="text/x-mathjax-config">
-MathJax.Hub.Config({
-  displayAlign: "left",
-  displayIndent: "2em"
-});
+    MathJax.Hub.Config({ displayAlign: "left", displayIndent: "2em" });
 </script>
 <script async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
 
