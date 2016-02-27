@@ -52,10 +52,10 @@ $(function () {
         $("#variance-x").text(xs.variance().toPrecision(5));
         $("#variance-y").text(ys.variance().toPrecision(5));
         var welch = welchttest(xs._data, ys._data);
-        $("#welch-ttest-t").text("t = " + welch.t.toPrecision(5));
-        $("#welch-ttest-nu").text("nu = " + welch.nu.toPrecision(5));
-        $("#welch-ttest-p").text("p = " + welch.pvalue.toPrecision(5));
-        $("#effect-size-cohen").text("d = " + effectsizeUnpaired(xs._data, ys._data).toPrecision(5));
+        $("#welch-ttest-t").text(welch.t.toPrecision(5));
+        $("#welch-ttest-nu").text(welch.nu.toPrecision(5));
+        $("#welch-ttest-p").text(welch.pvalue.toPrecision(5));
+        $("#effect-size-cohen").text(effectsizeUnpaired(xs._data, ys._data).toPrecision(5));
     });
 
     $("#run-test").click();
