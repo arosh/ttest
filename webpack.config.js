@@ -1,8 +1,12 @@
 var webpack = require('webpack');
 module.exports = {
-    entry: './assets/unpaired.js',
+    entry: {
+        unpaired: './assets/unpaired.js',
+        paired: './assets/paired.js'
+    },
     output: {
-        filename: './assets/unpaired.min.js'
+        path: './assets',
+        filename: "[name].min.js"
     },
     plugins: [
         new webpack.optimize.UglifyJsPlugin() // minify
