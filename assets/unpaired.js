@@ -13,8 +13,8 @@ $(function () {
     };
 
     var effectsizeUnpaired = function (xs, ys) {
-        var numer = xs.mean() - xs.mean();
-        var denom = Math.sqrt(((xs.size() - 1) * xs.variance() + (xs.size() - 1) * xs.variance()) / (xs.size() + xs.size() - 2));
+        var numer = xs.mean() - ys.mean();
+        var denom = Math.sqrt(((xs.size() - 1) * xs.variance() + (ys.size() - 1) * ys.variance()) / (xs.size() + ys.size() - 2));
         return numer / denom;
     };
 
