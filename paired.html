@@ -33,6 +33,10 @@
 
     <button class="btn btn-primary pull-right" type="button" id="run-test" style="margin-top: 1em; margin-bottom: 1em;">Test</button>
 
+    <div class="clearfix"></div>
+
+    <div id="alert-size" class="alert alert-danger">size(Sample 1) != size(Sample 2)</div>
+
     <table class="table">
         <thead>
             <tr>
@@ -68,22 +72,32 @@
                 <td id="sd-y"></td>
             </tr>
             <tr>
-                <th scope="row" rowspan="3">Welch's t-test</th>
-                <td>\[t=\frac{\mu_1-\mu_2}{\sqrt{s_1^2/n_1+s_2^2/n_2}}\]</td>
-                <td id="welch-ttest-t" colspan="2"></td>
+                <th scope="row">Mean of Differences</th>
+                <td>\[\mu_d=\frac{1}{n}\sum_{i=1}^n(x_{1,i}-x_{2,i})\]</td>
+                <td id="mean-d"></td>
             </tr>
             <tr>
-                <td>\[\nu=\frac{(s_1^2/n_1+s_2^2/n_2)^2}{\frac{(s_1^2/n_1)^2}{n_1-1}+\frac{(s_2^2/n_2)^2}{n_2-1}}\]</td>
-                <td id="welch-ttest-nu" colspan="2"></td>
+                <th scope="row">Unbiased Variance of Differences</th>
+                <td>\[s_d^2=\frac{1}{n-1}\sum_{i=1}^n(x_{1,i}-x_{2,i}-\mu_d)^2\]</td>
+                <td id="variance-d"></td>
+            </tr>
+            <tr>
+                <th scope="row" rowspan="3">Paired t-test</th>
+                <td>\[t=\frac{\mu_d}{\sqrt{s_d^2/n}}\]</td>
+                <td id="paired-ttest-t" colspan="2"></td>
+            </tr>
+            <tr>
+                <td>\[\nu=n-1\]</td>
+                <td id="paired-test-nu" colspan="2"></td>
             </tr>
             <tr>
                 <td>\[p=2(1-\mathrm{cdf}(\nu,|t|))\]</td>
-                <td id="welch-ttest-p" colspan="2"></td>
+                <td id="paired-test-p" colspan="2"></td>
             </tr>
             <tr>
                 <th scope="row">Effect Size</th>
-                <td>\[d=\frac{\mu_1-\mu_2}{\sqrt{\frac{(n_1-1)s_1^2+(n_2-1)s_2^2}{n_1+n_2-2}}}\]</td>
-                <td id="effect-size-cohen" colspan="2"></td>
+                <td>\[d=\frac{\mu_d}{\sqrt{s_d^2}}\]</td>
+                <td id="effect-size-paired" colspan="2"></td>
             </tr>
         </tbody>
     </table>
@@ -95,6 +109,7 @@
         <li><a href="http://oku.edu.mie-u.ac.jp/~okumura/stat/ttest.html">t検定 - 奥村研究室</a></li>
         <li><a href="http://oku.edu.mie-u.ac.jp/~okumura/stat/effectsize.html">効果量，Cohen's d，検出力，検出限界 - 奥村研究室</a></li>
         <li><a href="http://sigir.org/files/forum/2014J/2014J_sigirforum_Article_TetsuyaSakai.pdf">Sakai, T.: Statistical reform in information retrieval?, ACM SIGIR Forum Vol.48, pp.3-12 (2014).</a></li>
+        <li><a href="http://www.geisya.or.jp/~mwm48961/statistics/ttest_question1.htm">対応のある場合のt検定 例題・問題</a></li>
     </ul>
 </div>
 
