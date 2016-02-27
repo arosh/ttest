@@ -47,10 +47,15 @@ $(function () {
     $('#run-test').on('click', function () {
         var xs = parseTextArea("#group-x");
         var ys = parseTextArea("#group-y");
+        $("#size-x").text(xs.size());
+        $("#size-y").text(ys.size());
+
         $("#mean-x").text(xs.mean().toPrecision(5));
         $("#mean-y").text(ys.mean().toPrecision(5));
+
         $("#variance-x").text(xs.variance().toPrecision(5));
         $("#variance-y").text(ys.variance().toPrecision(5));
+
         var welch = welchttest(xs._data, ys._data);
         $("#welch-ttest-t").text(welch.t.toPrecision(5));
         $("#welch-ttest-nu").text(welch.nu.toPrecision(5));
