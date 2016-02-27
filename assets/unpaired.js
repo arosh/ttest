@@ -41,9 +41,6 @@ $(function () {
         return summary(numbers);
     };
 
-    $("#group-x").val([1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 4, 1, 1].join("\n"));
-    $("#group-y").val([3, 3, 4, 3, 1, 2, 3, 1, 1, 5, 4].join("\n"));
-
     $('#run-test').on('click', function () {
         var xs = parseTextArea("#group-x");
         var ys = parseTextArea("#group-y");
@@ -62,6 +59,9 @@ $(function () {
         $("#welch-ttest-p").text(welch.pvalue.toPrecision(5));
         $("#effect-size-cohen").text(effectsizeUnpaired(xs._data, ys._data).toPrecision(5));
     });
+
+    $("#group-x").val([1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 4, 1, 1].join("\n"));
+    $("#group-y").val([3, 3, 4, 3, 1, 2, 3, 1, 1, 5, 4].join("\n"));
 
     $("#run-test").click();
 });
