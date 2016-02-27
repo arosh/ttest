@@ -4,11 +4,11 @@ $(function () {
         var summary = require("summary");
         var x = summary(xs);
         var y = summary(ys);
-        var sxm = x.variance() / x.size();
+        var sxn = x.variance() / x.size();
         var syn = y.variance() / y.size();
-        var t = (x.mean() - y.mean()) / Math.sqrt(sxm + syn);
-        var numer = Math.pow(sxm + syn, 2);
-        var denom = Math.pow(sxm, 2) / (x.size() - 1) + Math.pow(syn, 2) / (y.size() - 1);
+        var t = (x.mean() - y.mean()) / Math.sqrt(sxn + syn);
+        var numer = Math.pow(sxn + syn, 2);
+        var denom = Math.pow(sxn, 2) / (x.size() - 1) + Math.pow(syn, 2) / (y.size() - 1);
         var nu = numer / denom;
         var studentt = new distributions.Studentt(nu);
         var pvalue = 2 * (1 - studentt.cdf(Math.abs(t)));
