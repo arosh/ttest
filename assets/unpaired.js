@@ -53,6 +53,9 @@ $(function () {
         $("#variance-x").text(xs.variance().toPrecision(5));
         $("#variance-y").text(ys.variance().toPrecision(5));
 
+        $("#sd-x").text(xs.sd().toPrecision(5));
+        $("#sd-y").text(ys.sd().toPrecision(5));
+
         var welch = welchttest(xs._data, ys._data);
         $("#welch-ttest-t").text(welch.t.toPrecision(5));
         $("#welch-ttest-nu").text(welch.nu.toPrecision(5));
