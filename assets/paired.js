@@ -55,7 +55,7 @@ $(function () {
         $("#sd-y").text(ys.sd().toPrecision(5));
 
         if (xs.size() != ys.size()) {
-            $("#alert-size").css("display", "block");
+            $("#alert-size").removeClass("hidden");
 
             $("#mean-d").text("NA");
             $("#variance-d").text("NA");
@@ -65,7 +65,7 @@ $(function () {
             $("#effect-size-paired").text("NA");
         }
         else {
-            $("#alert-size").css("display", "none");
+            $("#alert-size").addClass("hidden");
 
             var d = difference(xs._data, ys._data);
 
