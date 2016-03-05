@@ -68,13 +68,14 @@ $(function () {
             $("#alert-size").addClass("hidden");
 
             var d = difference(xs._data, ys._data);
-
             $("#mean-d").text(d.mean().toPrecision(5));
             $("#variance-d").text(d.variance().toPrecision(5));
+
             var paired = pairedttest(d);
             $("#paired-test-t").text(paired.t.toPrecision(5));
-            $("#paired-test-nu").text(paired.nu.toPrecision(5));
+            $("#paired-test-nu").text(paired.nu);
             $("#paired-test-p").text(paired.pvalue.toPrecision(5));
+
             var es = effectsizePaired(d);
             $("#effect-size-paired").text(es.toPrecision(5));
         }

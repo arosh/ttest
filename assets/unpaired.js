@@ -54,6 +54,7 @@ $(function () {
         $("#welch-ttest-t").text(welch.t.toPrecision(5));
         $("#welch-ttest-nu").text(welch.nu.toPrecision(5));
         $("#welch-ttest-p").text(welch.pvalue.toPrecision(5));
+
         var es = effectsizeUnpaired(xs, ys);
         $("#effect-size-unpaired").text(es.toPrecision(5));
     });
