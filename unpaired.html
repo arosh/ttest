@@ -1,115 +1,121 @@
 <!DOCTYPE html>
-<meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>Unpaired two-tailed t-test</title>
-<link rel="stylesheet" href="assets/bootstrap-umi.min.css">
-<style>
-    .container {
-        width: 970px !important;
-        margin-bottom: 1em;
-    }
-</style>
+<html lang="ja">
 
-<div class="container">
-    <nav class="navbar navbar-default">
-        <ul class="nav navbar-nav">
-            <li><a href="unpaired.html">Unpaired two-tailed t-test</a></li>
-            <li><a href="paired.html">Paired two-tailed t-test</a></li>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Unpaired two-tailed t-test</title>
+    <link rel="stylesheet" href="assets/bootstrap-umi.min.css">
+    <style>
+        .container {
+            width: 970px !important;
+            margin-bottom: 1em;
+        }
+    </style>
+    <script>
+        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create', 'UA-36473722-1', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <nav class="navbar navbar-default">
+            <ul class="nav navbar-nav">
+                <li><a href="unpaired.html">Unpaired two-tailed t-test</a></li>
+                <li><a href="paired.html">Paired two-tailed t-test</a></li>
+            </ul>
+        </nav>
+
+        <h1>Unpaired two-tailed t-test</h1>
+
+        <div class="row">
+            <div class="col-xs-6">
+                <h3>Sample 1</h3>
+                <textarea rows="10" class="form-control" id="group-x"></textarea>
+            </div>
+            <div class="col-xs-6">
+                <h3>Sample 2</h3>
+                <textarea rows="10" class="form-control" id="group-y"></textarea>
+            </div>
+        </div>
+
+        <button class="btn btn-primary pull-right" type="button" id="run-test" style="margin-top: 1em; margin-bottom: 1em;">Test</button>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Definition</th>
+                    <th>Sample 1</th>
+                    <th>Sample 2</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">Sample Size</th>
+                    <td>\[n\]</td>
+                    <td id="size-x"></td>
+                    <td id="size-y"></td>
+                </tr>
+                <tr>
+                    <th scope="row">Mean</th>
+                    <td>\[\mu=\frac{1}{n}\sum_{i=1}^n x_i\]</td>
+                    <td id="mean-x"></td>
+                    <td id="mean-y"></td>
+                </tr>
+                <tr>
+                    <th scope="row">Unbiased Variance</th>
+                    <td>\[s^2=\frac{1}{n - 1}\sum_{i=1}^n (x_i - \mu)^2\]</td>
+                    <td id="variance-x"></td>
+                    <td id="variance-y"></td>
+                </tr>
+                <tr>
+                    <th scope="row">Unbiased Standard Deviation</th>
+                    <td>\[s=\sqrt{s^2}\]</td>
+                    <td id="sd-x"></td>
+                    <td id="sd-y"></td>
+                </tr>
+                <tr>
+                    <th scope="row" rowspan="3">Welch's t-test</th>
+                    <td>\[t=\frac{\mu_1-\mu_2}{\sqrt{s_1^2/n_1+s_2^2/n_2}}\]</td>
+                    <td id="welch-ttest-t" colspan="2"></td>
+                </tr>
+                <tr>
+                    <td>\[\nu=\frac{(s_1^2/n_1+s_2^2/n_2)^2}{\frac{(s_1^2/n_1)^2}{n_1-1}+\frac{(s_2^2/n_2)^2}{n_2-1}}\]</td>
+                    <td id="welch-ttest-nu" colspan="2"></td>
+                </tr>
+                <tr>
+                    <td>\[p=2(1-\mathrm{cdf}(\nu,|t|))\]</td>
+                    <td id="welch-ttest-p" colspan="2"></td>
+                </tr>
+                <tr>
+                    <th scope="row">Effect Size</th>
+                    <td>\[d=\frac{\mu_1-\mu_2}{\sqrt{\frac{(n_1-1)s_1^2+(n_2-1)s_2^2}{n_1+n_2-2}}}\]</td>
+                    <td id="effect-size-unpaired" colspan="2"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>External Links</h2>
+        <ul>
+            <li><a href="http://vassarstats.net/tu.html" rel="nofollow">t-Test for Independent or Correlated Samples</a></li>
+            <li><a href="https://oku.edu.mie-u.ac.jp/~okumura/stat/basics.html" rel="nofollow">統計の基礎 - 奥村研究室</a></li>
+            <li><a href="http://oku.edu.mie-u.ac.jp/~okumura/stat/ttest.html" rel="nofollow">t検定 - 奥村研究室</a></li>
+            <li><a href="http://oku.edu.mie-u.ac.jp/~okumura/stat/effectsize.html" rel="nofollow">効果量，Cohen's d，検出力，検出限界 - 奥村研究室</a></li>
         </ul>
-    </nav>
-
-    <h1>Unpaired two-tailed t-test</h1>
-
-    <div class="row">
-        <div class="col-xs-6">
-            <h3>Sample 1</h3>
-            <textarea rows="10" class="form-control" id="group-x"></textarea>
-        </div>
-        <div class="col-xs-6">
-            <h3>Sample 2</h3>
-            <textarea rows="10" class="form-control" id="group-y"></textarea>
-        </div>
     </div>
 
-    <button class="btn btn-primary pull-right" type="button" id="run-test" style="margin-top: 1em; margin-bottom: 1em;">Test</button>
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({ displayAlign: "left" });
+    </script>
+    <script async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
+    <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
+    <script src="assets/unpaired.min.js"></script>
+</body>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Definition</th>
-                <th>Sample 1</th>
-                <th>Sample 2</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="row">Sample Size</th>
-                <td>\[n\]</td>
-                <td id="size-x"></td>
-                <td id="size-y"></td>
-            </tr>
-            <tr>
-                <th scope="row">Mean</th>
-                <td>\[\mu=\frac{1}{n}\sum_{i=1}^n x_i\]</td>
-                <td id="mean-x"></td>
-                <td id="mean-y"></td>
-            </tr>
-            <tr>
-                <th scope="row">Unbiased Variance</th>
-                <td>\[s^2=\frac{1}{n - 1}\sum_{i=1}^n (x_i - \mu)^2\]</td>
-                <td id="variance-x"></td>
-                <td id="variance-y"></td>
-            </tr>
-            <tr>
-                <th scope="row">Unbiased Standard Deviation</th>
-                <td>\[s=\sqrt{s^2}\]</td>
-                <td id="sd-x"></td>
-                <td id="sd-y"></td>
-            </tr>
-            <tr>
-                <th scope="row" rowspan="3">Welch's t-test</th>
-                <td>\[t=\frac{\mu_1-\mu_2}{\sqrt{s_1^2/n_1+s_2^2/n_2}}\]</td>
-                <td id="welch-ttest-t" colspan="2"></td>
-            </tr>
-            <tr>
-                <td>\[\nu=\frac{(s_1^2/n_1+s_2^2/n_2)^2}{\frac{(s_1^2/n_1)^2}{n_1-1}+\frac{(s_2^2/n_2)^2}{n_2-1}}\]</td>
-                <td id="welch-ttest-nu" colspan="2"></td>
-            </tr>
-            <tr>
-                <td>\[p=2(1-\mathrm{cdf}(\nu,|t|))\]</td>
-                <td id="welch-ttest-p" colspan="2"></td>
-            </tr>
-            <tr>
-                <th scope="row">Effect Size</th>
-                <td>\[d=\frac{\mu_1-\mu_2}{\sqrt{\frac{(n_1-1)s_1^2+(n_2-1)s_2^2}{n_1+n_2-2}}}\]</td>
-                <td id="effect-size-unpaired" colspan="2"></td>
-            </tr>
-        </tbody>
-    </table>
-
-    <h2>External Links</h2>
-    <ul>
-        <li><a href="http://vassarstats.net/tu.html" rel="nofollow">t-Test for Independent or Correlated Samples</a></li>
-        <li><a href="https://oku.edu.mie-u.ac.jp/~okumura/stat/basics.html" rel="nofollow">統計の基礎 - 奥村研究室</a></li>
-        <li><a href="http://oku.edu.mie-u.ac.jp/~okumura/stat/ttest.html" rel="nofollow">t検定 - 奥村研究室</a></li>
-        <li><a href="http://oku.edu.mie-u.ac.jp/~okumura/stat/effectsize.html" rel="nofollow">効果量，Cohen's d，検出力，検出限界 - 奥村研究室</a></li>
-    </ul>
-</div>
-
-<script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
-<script src="assets/unpaired.min.js"></script>
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({ displayAlign: "left" });
-</script>
-<script async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS_CHTML"></script>
-
-<script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-ga('create', 'UA-36473722-1', 'auto');
-ga('send', 'pageview');
-
-</script>
+</html>
