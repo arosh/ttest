@@ -102,13 +102,24 @@
                     <td>\[d=\frac{\mu_1-\mu_2}{\sqrt{\frac{(n_1-1)s_1^2+(n_2-1)s_2^2}{n_1+n_2-2}}}\]</td>
                     <td id="effect-size-unpaired" colspan="2"></td>
                 </tr>
+                <tr>
+                    <th scope="row">Confidence Interval (95%)</th>
+                    <td>\[\mu_1-\mu_2\pm\mathrm{T.INV.2T}(0.05,\nu)\sqrt{s_1^2/n_1+s_2^2/n_2}\]</td>
+                    <td id="ci-95" colspan="2"></td>
+                </tr>
+                <tr>
+                    <th scope="row">Confidence Interval (99%)</th>
+                    <td>\[\mu_1-\mu_2\pm\mathrm{T.INV.2T}(0.01,\nu)\sqrt{s_1^2/n_1+s_2^2/n_2}\]</td>
+                    <td id="ci-99" colspan="2"></td>
+                </tr>
             </tbody>
         </table>
 
         <h2>ToDo</h2>
         <ul>
-            <li>confidence interval</li>
-            <li>visualization (histogram, box plot, scatter, ...)</li>
+            <li>histogram</li>
+            <li>scatter</li>
+            <li>boxplot</li>
         </ul>
 
         <h2>External Links</h2>

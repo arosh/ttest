@@ -1,5 +1,5 @@
-$(function () {
-    var welchttest = function (xs, ys) {
+$(function() {
+    var welchttest = function(xs, ys) {
         var distributions = require("distributions");
         var sxn = xs.variance() / xs.size();
         var syn = ys.variance() / ys.size();
@@ -12,21 +12,35 @@ $(function () {
         return { t: t, nu: nu, pvalue: pvalue };
     };
 
-    var effectsizeUnpaired = function (xs, ys) {
+    var effectsizeUnpaired = function(xs, ys) {
         var numer = xs.mean() - ys.mean();
         var denom = Math.sqrt(((xs.size() - 1) * xs.variance() + (ys.size() - 1) * ys.variance()) / (xs.size() + ys.size() - 2));
         return numer / denom;
     };
 
-    Number.isFinite = Number.isFinite || function (any) {
+    var confidenceInterval = function(xs, ys, alpha) {
+        var distributions = require("distributions");
+        var welch = welchttest(xs, ys);
+        var studentt = new distributions.Studentt(welch.nu);
+        var tinv = studentt.inv((1 + alpha) / 2);
+
+        var sxn = xs.variance() / xs.size();
+        var syn = ys.variance() / ys.size();
+        var me = tinv * Math.sqrt(sxn + syn);;
+
+        var mean = xs.mean() - ys.mean();
+        return { 'lower': mean - me, 'upper': mean + me };
+    };
+
+    Number.isFinite = Number.isFinite || function(any) {
         return typeof any === 'number' && isFinite(any);
     };
 
-    var parseTextArea = function (elem) {
+    var parseTextArea = function(elem) {
         var summary = require("summary");
         var items = $(elem).val().split(/[,\s]+/);
         var numbers = [];
-        $.each(items, function (index, item) {
+        $.each(items, function(index, item) {
             var num = parseFloat($.trim(item));
             if (Number.isFinite(num)) {
                 numbers.push(num);
@@ -35,7 +49,7 @@ $(function () {
         return summary(numbers);
     };
 
-    $('#run-test').on('click', function () {
+    $('#run-test').on('click', function() {
         var xs = parseTextArea("#group-x");
         var ys = parseTextArea("#group-y");
         $("#size-x").text(xs.size());
@@ -57,6 +71,12 @@ $(function () {
 
         var es = effectsizeUnpaired(xs, ys);
         $("#effect-size-unpaired").text(es.toPrecision(5));
+
+        var ci95 = confidenceInterval(xs, ys, 0.95);
+        $("#ci-95").text("[" + ci95.lower.toPrecision(5) + ", " + ci95.upper.toPrecision(5) + "]");
+
+        var ci99 = confidenceInterval(xs, ys, 0.99);
+        $("#ci-99").text("[" + ci99.lower.toPrecision(5) + ", " + ci99.upper.toPrecision(5) + "]");
     });
 
     $("#group-x").val([1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 4, 1, 1].join("\n"));
