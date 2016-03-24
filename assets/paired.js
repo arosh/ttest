@@ -1,5 +1,5 @@
-$(function () {
-    var pairedttest = function (d) {
+$(function() {
+    var pairedttest = function(d) {
         var distributions = require("distributions");
         var t = d.mean() * Math.sqrt(d.size()) / d.sd();
         var nu = d.size() - 1;
@@ -8,19 +8,29 @@ $(function () {
         return { t: t, nu: nu, pvalue: pvalue };
     };
 
-    var effectsizePaired = function (d) {
+    var effectsizePaired = function(d) {
         return d.mean() / d.sd();
     };
 
-    Number.isFinite = Number.isFinite || function (any) {
+    var confidenceInterval = function(d, alpha) {
+        var distributions = require("distributions");
+        var n = d.size();
+        var nu = n - 1;
+        var studentt = new distributions.Studentt(nu);
+        var tinv = studentt.inv((1 + alpha) / 2);
+        var me = tinv * Math.sqrt(d.variance() / n);
+        return { 'lower': d.mean() - me, 'upper': d.mean() + me };
+    };
+
+    Number.isFinite = Number.isFinite || function(any) {
         return typeof any === 'number' && isFinite(any);
     };
 
-    var parseTextArea = function (elem) {
+    var parseTextArea = function(elem) {
         var summary = require("summary");
         var items = $(elem).val().split(/[,\s]+/);
         var numbers = [];
-        $.each(items, function (index, item) {
+        $.each(items, function(index, item) {
             var num = parseFloat($.trim(item));
             if (Number.isFinite(num)) {
                 numbers.push(num);
@@ -29,7 +39,7 @@ $(function () {
         return summary(numbers);
     };
 
-    var difference = function (xs, ys) {
+    var difference = function(xs, ys) {
         var summary = require("summary");
         var d = [];
         for (var i = 0; i < xs.length; i++) {
@@ -38,7 +48,7 @@ $(function () {
         return summary(d);
     };
 
-    $('#run-test').on('click', function () {
+    $('#run-test').on('click', function() {
         var xs = parseTextArea("#group-x");
         var ys = parseTextArea("#group-y");
 
@@ -78,11 +88,17 @@ $(function () {
 
             var es = effectsizePaired(d);
             $("#effect-size-paired").text(es.toPrecision(5));
+
+            var ci95 = confidenceInterval(d, 0.95);
+            $("#ci-95").text("[" + ci95.lower.toPrecision(5) + ", " + ci95.upper.toPrecision(5) + "]");
+
+            var ci99 = confidenceInterval(d, 0.99);
+            $("#ci-99").text("[" + ci99.lower.toPrecision(5) + ", " + ci99.upper.toPrecision(5) + "]");
         }
     });
 
-    $("#group-x").val([109, 115, 107, 124, 123, 112, 128, 119, 121, 124, 123, 123].join("\n"));
-    $("#group-y").val([105, 100, 118, 122, 122, 125, 101, 128, 104, 107, 103, 128].join("\n"));
+    $("#group-x").val([0.39, 0.28, 0.31, 0.21, 0.19, 0.64, 0.75, 0.36, 0.66, 0.54].join("\n"));
+    $("#group-y").val([0.27, 0.04, 0.18, 0.08, 0.19, 0.54, 0.57, 0.28, 0.20, 0.40].join("\n"));
 
     $("#run-test").click();
 });
